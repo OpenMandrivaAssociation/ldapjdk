@@ -6,7 +6,7 @@
 
 Name:		ldapjdk
 Version:	4.17
-Release:	%mkrel 1.5
+Release:	%mkrel 1.6
 Epoch:		0
 Summary: 	The Mozilla LDAP Java SDK
 License:	MPL
@@ -27,7 +27,7 @@ Requires:  	java-sasl
 BuildRequires:	oro
 BuildRequires:	java-devel
 BuildRequires:	jndi
-BuildRequires:	jpackage-utils >= 0:1.5
+BuildRequires:	java-rpmbuild >= 0:1.5
 BuildRequires:	jaas
 BuildRequires:	jsse
 BuildRequires:	jss
