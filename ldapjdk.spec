@@ -6,7 +6,7 @@
 
 Name:		ldapjdk
 Version:	4.17
-Release:	%mkrel 1.6
+Release:	%mkrel 1.6.0
 Epoch:		0
 Summary: 	The Mozilla LDAP Java SDK
 License:	MPL
@@ -17,7 +17,7 @@ URL:		http://www.mozilla.org/directory/javasdk.html
 # deleting mozilla/directory/java-sdk/ldap{jdk,sp}/lib
 # as they contain non-distributable jars.
 Source0:	%{tar_name}_%{tar_version}_clean.tar.bz2
-
+Patch0:         %{name}-enum.patch
 Requires:	oro
 Requires:	jndi
 Requires:	jpackage-utils >= 0:1.5
@@ -56,6 +56,7 @@ Javadoc for %{name}
 
 %prep
 %setup -q -c
+%patch0 -p1 -b .orig
 
 %build
 # cleanup CVS dirs
@@ -69,7 +70,7 @@ cd java-sdk
 export JAVA_HOME="%{java_home}"
 export CLASSPATH=$(build-classpath oro jndi jaas jss jsse sasl)
 export MOZ_SRC=`pwd`
-export JAVA_VERSION=1.4
+export JAVA_VERSION=1.5
 srcpath=ietfldap:ldapfilter:ldapbeans:ldapjdk:ldapsp:tools
 
 # Main jar
