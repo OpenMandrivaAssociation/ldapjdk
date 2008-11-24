@@ -1,46 +1,43 @@
-%define spname		ldapsp
-%define tar_name	ldapsdk_java
-%define tar_version	20020819
-%define section		free
-%define gcj_support	1
+%define spname                ldapsp
+%define tar_name        ldapsdk_java
+%define tar_version        20020819
+%define section                free
+%define gcj_support        1
 
-Name:		ldapjdk
-Version:	4.17
-Release:	%mkrel 1.6.0
-Epoch:		0
-Summary: 	The Mozilla LDAP Java SDK
-License:	MPL
-Group:		Development/Java
-URL:		http://www.mozilla.org/directory/javasdk.html
-# This tarball is made by taking the upstream one from
-# ftp://ftp.mozilla.org/pub/directory/java-sdk/ and
-# deleting mozilla/directory/java-sdk/ldap{jdk,sp}/lib
-# as they contain non-distributable jars.
-Source0:	%{tar_name}_%{tar_version}_clean.tar.bz2
-Patch0:         %{name}-enum.patch
-Requires:	oro
-Requires:	jndi
-Requires:	jpackage-utils >= 0:1.5
-Requires:	jaas
-Requires:	jsse
-Requires:  	java-sasl
-BuildRequires:	oro
-BuildRequires:	java-devel
-BuildRequires:	jndi
-BuildRequires:	java-rpmbuild >= 0:1.5
-BuildRequires:	jaas
-BuildRequires:	jsse
-BuildRequires:	jss
+Name:           ldapjdk
+Version:        4.18
+Release:        %mkrel 0.0.1
+Epoch:          0
+Summary:        Mozilla LDAP Java SDK
+License:        MPL
+Group:          Development/Java
+URL:            http://www.mozilla.org/directory/javasdk.html
+# cvs -d:pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot export -r LDAPJavaSDK_418 DirectorySDKSourceJava
+# tar cjf ldapjdk-4.18.tar.bz2 mozilla
+Source0:        ldapjdk-4.18.tar.bz2
+Requires:       oro
+Requires:       jndi
+Requires:       jpackage-utils >= 0:1.5
+Requires:       jaas
+Requires:       jsse
+Requires:       java-sasl
+BuildRequires:  oro
+BuildRequires:  java-devel
+BuildRequires:  jndi
+BuildRequires:  java-rpmbuild >= 0:1.5
+BuildRequires:  jaas
+BuildRequires:  jsse
+BuildRequires:  jss
 BuildRequires:  java-sasl
-Provides:	jndi-ldap = 0:1.3.0
+Provides:       jndi-ldap = 0:1.3.0
+Provides:       ldapsdk = %{epoch}:%{version}-%{release}
+Obsoletes:      ldapsdk < %{epoch}:%{version}-%{release}
 %if %{gcj_support}
 BuildRequires:  java-gcj-compat-devel
 %else
 Buildarch:      noarch
 %endif
-BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-#Distribution:	JPackage
-#Vendor:		JPackage Project
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 The Mozilla LDAP SDKs enable you to write applications which access,
@@ -49,22 +46,18 @@ manage, and update the information stored in an LDAP directory.
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
-Obsoletes:      openjmx-javadoc
+Obsoletes:      openjmx-javadoc < %{epoch}:%{version}-%{release}
 
 %description javadoc
 Javadoc for %{name}
 
 %prep
 %setup -q -c
-%patch0 -p1 -b .orig
 
 %build
-# cleanup CVS dirs
-rm -fr $(find . -name CVS -type d)
-# make sure there are no proprietary jars here
-[ `find . -name "*.jar" -type f | wc -l` = 0 ] || exit 1
+find . -type f -name "*.jar" | xargs -t rm
 mv mozilla/directory/* .
-rm -fr mozilla
+rm -rf mozilla
 
 cd java-sdk
 export JAVA_HOME="%{java_home}"
@@ -93,19 +86,20 @@ install -m 644 java-sdk/dist/packages/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{n
 install -m 644 java-sdk/dist/packages/%{spname}.jar $RPM_BUILD_ROOT%{_javadir}/%{spname}-%{version}.jar
 
 pushd $RPM_BUILD_ROOT%{_javadir}
-	for jar in *-%{version}.jar ; do
-		ln -fs ${jar} $(echo $jar | sed "s|-%{version}.jar|.jar|g")
-	done
+        for jar in *-%{version}.jar ; do
+                ln -fs ${jar} $(echo $jar | sed "s|-%{version}.jar|.jar|g")
+        done
 popd
 
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}-1.3.0
 
 pushd $RPM_BUILD_ROOT%{_javadir}-1.3.0
-	ln -fs ../java/*%{spname}.jar jndi-ldap.jar
+        ln -fs ../java/*%{spname}.jar jndi-ldap.jar
 popd
 
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -r java-sdk/dist/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %if %{gcj_support}
 %{_bindir}/aot-compile-rpm
@@ -135,7 +129,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files javadoc
 %defattr(0644,root,root,0755)
-%dir %{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}-%{version}/*
+%{_javadocdir}/%{name}
+%{_javadocdir}/%{name}-%{version}
 
 
