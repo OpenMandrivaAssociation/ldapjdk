@@ -79,34 +79,34 @@ srcpath=ietfldap:ldapfilter:ldapbeans:ldapjdk:ldapsp:tools
 %__make -f ldapsp.mk JAVADOC="%{javadoc} -sourcepath $srcpath" doc
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 java-sdk/dist/packages/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-install -m 644 java-sdk/dist/packages/%{spname}.jar $RPM_BUILD_ROOT%{_javadir}/%{spname}-%{version}.jar
+install -d -m 755 %{buildroot}%{_javadir}
+install -m 644 java-sdk/dist/packages/%{name}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
+install -m 644 java-sdk/dist/packages/%{spname}.jar %{buildroot}%{_javadir}/%{spname}-%{version}.jar
 
-pushd $RPM_BUILD_ROOT%{_javadir}
+pushd %{buildroot}%{_javadir}
         for jar in *-%{version}.jar ; do
                 ln -fs ${jar} $(echo $jar | sed "s|-%{version}.jar|.jar|g")
         done
 popd
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}-1.3.0
+install -d -m 755 %{buildroot}%{_javadir}-1.3.0
 
-pushd $RPM_BUILD_ROOT%{_javadir}-1.3.0
+pushd %{buildroot}%{_javadir}-1.3.0
         ln -fs ../java/*%{spname}.jar jndi-ldap.jar
 popd
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -r java-sdk/dist/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
+cp -r java-sdk/dist/doc/* %{buildroot}%{_javadocdir}/%{name}-%{version}
+ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 
 %if %{gcj_support}
 %{_bindir}/aot-compile-rpm
 %endif
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %if %{gcj_support}
 %post
