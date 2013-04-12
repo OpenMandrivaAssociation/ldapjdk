@@ -6,7 +6,7 @@
 
 Name:           ldapjdk
 Version:        4.18
-Release:        %mkrel 0.0.7
+Release:        0.0.8
 Epoch:          0
 Summary:        Mozilla LDAP Java SDK
 License:        MPL
