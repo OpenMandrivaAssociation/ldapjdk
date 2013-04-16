@@ -22,7 +22,7 @@ Requires:       jaas
 Requires:       jsse
 Requires:       java-sasl
 BuildRequires:  oro
-BuildRequires:  java-devel
+BuildRequires:  java-1.7.0-openjdk-devel
 BuildRequires:  jndi
 BuildRequires:  java-rpmbuild >= 0:1.5
 BuildRequires:  jaas
