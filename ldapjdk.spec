@@ -7,7 +7,7 @@
 Summary:	Mozilla LDAP Java SDK
 Name:		ldapjdk
 Version:	4.18
-Release:	0.0.8
+Release:	0.0.9
 License:	MPL
 Group:		Development/Java
 Url:	http://www.mozilla.org/directory/javasdk.html
