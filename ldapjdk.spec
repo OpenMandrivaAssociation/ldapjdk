@@ -5,9 +5,10 @@
 
 Name:		ldapjdk
 Version:	4.18
-Release:	14.0%{?dist}
+Release:	15.1
 Epoch:		0
 Summary: 	The Mozilla LDAP Java SDK
+Group:		Development/Java
 License:	MPLv1.1 or GPLv2+ or LGPLv2+
 
 URL:		http://www.mozilla.org/directory/javasdk.html
@@ -82,15 +83,13 @@ install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -r mozilla/directory/java-sdk/dist/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%files
+%files -f .mfiles
 %defattr(-,root,root,-)
 %{_javadir}/%{name}*.jar
 %{_javadir}/%{spname}*.jar
 %{_javadir}/%{filtname}*.jar
 %{_javadir}/%{beansname}*.jar
 %{_javadir}-1.3.0/*.jar
-%{_mavenpomdir}/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %defattr(-,root,root,)
