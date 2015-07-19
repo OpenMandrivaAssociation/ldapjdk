@@ -5,7 +5,7 @@
 
 Name:		ldapjdk
 Version:	4.18
-Release:	15.1
+Release:	15.2
 Epoch:		0
 Summary: 	The Mozilla LDAP Java SDK
 Group:		Development/Java
