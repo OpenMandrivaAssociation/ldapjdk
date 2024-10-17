@@ -11,7 +11,7 @@ Summary: 	The Mozilla LDAP Java SDK
 Group:		Development/Java
 License:	MPLv1.1 or GPLv2+ or LGPLv2+
 
-URL:		http://www.mozilla.org/directory/javasdk.html
+URL:		https://www.mozilla.org/directory/javasdk.html
 # mkdir ldapjdk-4.18 ; 
 # cvs -d:pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot Export -r LDAPJavaSDK_418 DirectorySDKSourceJava
 # tar -zcf ldapjdk-4.18,tar.gz ldapjdk-4.18
